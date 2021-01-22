@@ -10,46 +10,30 @@
 
 	"AboutImage": "https://i.imgur.com/5sOLND6.jpg",
 	"AboutContent": [
-		"I’m a Computer Science major by day, a Table Tennis player by evening, a functional wantrepreneur by midnight and a hustler always.",
-		"If you can’t find me, it’s because I’m already cycling, off to a hike, or studying for an exam",
-		"I am passionate about Space Technology and Human Psychology (though, never studied them formally). A die-hard fan of Elon Musk.",
-		"I love the way the concept of \"work\" has evolved over the past decades, and hence would love to travel and work together whenever I can."
+		"I'm an Information technology major by day, a cricket player by evening.",
+		"I’m  passionate about Artificial Intelligence, and further willing to do research work.",
+		"I am an organised and efficient person with an enquiring mind.",
+		"I love to solve mathematical puzzles ,always coming up with innovative ideas."
 	],
 
 	"WorkContent": [
-		"I am currently full time Software Developer Engineer at Microsoft."
+		"I am currently an under graduate student at VJTI, Mumbai."
 	],
-	"WorkImage": "https://i.imgur.com/BHt1YKg.png",
-	"InternshipsStartLine": "Previously, I have interned with :",
-	"InternShips": [{
-			"name": "Amazon India",
-			"link": "#"
-		},
-		{
-			"name": "North-Eastern Space Application Center (ISRO)",
-			"link": "https://drive.google.com/file/d/1fMoF7gUfsow8BxTIK7I7jf9wmq9v7wfq/view"
-		},
-		{
-			"name": "Computer Vision Center, Universitat Autonoma de Barcelona",
-			"link": "https://drive.google.com/file/d/1H9H4ja9TgpxYf4QxSfQH2bCZWyAFYwlC/view?usp=sharing"
-		}
-	],
+	"WorkImage": "",
+	"InternshipsStartLine": "",
+	"InternShips": "",
 	"ProjectsStartLine": "Some of the side projects I did can be found here :",
 	"Projects": [{
-			"name": "EisenList",
-			"link": "https://github.com/adityaketkar/eisenlist"
+			"name": "Sketch",
+			"link": "https://github.com/aditya2907/Sketch_openCV"
 		},
 		{
-			"name": "DelOr",
-			"link": "https://bitsdelor.wixsite.com/delor"
+			"name": "Distance_Detection",
+			"link": "https://github.com/aditya2907/Distance_Detection_openCV"
 		},
 		{
-			"name": "Alexa Music Companion",
-			"link": "https://medium.com/@ketkaraditya/hey-alexa-meet-music-1f7319750af7"
-		},
-		{
-			"name": "Gatsby Personal Webpage",
-			"link": "https://github.com/adityaketkar/circle-packing-personal-homepage"
+			"name": "Ecological Footprint Management",
+			"link": "#"
 		}
 	],
 
@@ -57,12 +41,12 @@
 	"CV": "https://www.visualcv.com/aditya-ketkar/",
 	"Resume": "https://drive.google.com/file/d/1M1Vw1J7Yc3BFIgzJXX4_U-_nfIXCfK8n/view?usp=sharing",
 
-	"emailid": "mailto:adityaketkar848@gmail.com",
-	"linkedin": "https://linkedin.com/in/adityaketkar",
-	"wordpress": "https://technoshblog.wordpress.com/",
+	"emailid": "mailto:suryawanshiaditya29@gmail.com",
+	"linkedin": "https://www.linkedin.com/in/suryawanshiaditya/",
+	"wordpress": "",
 	"facebook": "https://www.facebook.com/aditya",
-	"github": "https://github.com/adityaketkar",
-	"instagram": "http://www.adityaketkar.me",
-	"twitter": "https://twitter.com/ketkar_a",
-	"medium": "https://medium.com/@ketkaraditya"
+	"github": "https://github.com/aditya2907",
+	"instagram": "https://www.instagram.com/aditya_suryawanshi29/",
+	"twitter": "",
+	"medium": ""
 }
