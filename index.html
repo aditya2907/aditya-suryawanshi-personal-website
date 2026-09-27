@@ -16,13 +16,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Netlify detects this static form at build time; React renders the visible form. -->
-    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
-      <input name="name" />
-      <input name="email" type="email" />
-      <textarea name="message"></textarea>
-      <input name="bot-field" />
-    </form>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

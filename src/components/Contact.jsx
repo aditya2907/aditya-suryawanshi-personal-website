@@ -9,28 +9,16 @@ import { toast } from "sonner";
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      const form = e.currentTarget;
-      const body = new URLSearchParams(new FormData(form));
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: body.toString(),
-      });
-
-      if (!response.ok) throw new Error("Form submission failed");
-
-      form.reset();
-      toast.success("Thanks! Your message has been sent.");
-    } catch {
-      toast.error("I couldn't send your message. Please email me directly instead.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    const formData = new FormData(e.currentTarget);
+    const subject = encodeURIComponent(`Website message from ${formData.get("name")}`);
+    const body = encodeURIComponent(`${formData.get("message")}\n\nReply to: ${formData.get("email")}`);
+    window.location.href = `mailto:aditya.suryawanshi@ucdconnect.ie?subject=${subject}&body=${body}`;
+    toast.success("Opening your email app to send the message.");
+    setIsSubmitting(false);
   };
   return (
     <section id="contact" className="py-24 md:py-32 bg-secondary/30">
@@ -61,11 +49,7 @@ const Contact = () => {
                 </a>
               </div>
             </div>
-            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" className="space-y-4" onSubmit={handleSubmit}>
-              <input type="hidden" name="form-name" value="contact" />
-              <p className="hidden">
-                <label>Don't fill this out: <input name="bot-field" /></label>
-              </p>
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <Input name="name" autoComplete="name" placeholder="Your Name" aria-label="Your name" className="bg-card" required />
               <Input name="email" type="email" autoComplete="email" placeholder="Your Email" aria-label="Your email" className="bg-card" required />
               <Textarea name="message" placeholder="Your Message" aria-label="Your message" rows={5} className="bg-card resize-none" required />
