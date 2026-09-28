@@ -15,10 +15,6 @@ portfolio with a keyboard-accessible Snake game, file tabs, filtered projects,
 and a searchable command palette (`Cmd/Ctrl+K`). Contact opens an email draft;
 it does not send or store messages on a server.
 
-The visual reference is [Valentina Calabrese’s portfolio](https://valentinacalabrese.com/).
-The linked `vale-c/vale-folio-next` repository had no reuse license when inspected.
-This implementation was written independently; no source code, personal assets,
-blog posts, or account details were imported from that repository.
 
 ## Checks and GitHub Actions
 
