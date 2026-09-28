@@ -1,141 +1,26 @@
-import { motion } from "framer-motion";
-import { Code2, Database, Cloud, Cpu, Braces, Server } from "lucide-react";
+import { ArrowUpRight, Braces, Database, Cloud, Workflow } from "lucide-react";
+import Reveal from "./Reveal";
+import TiltCard from "./TiltCard";
 
-const skills = [
-  { name: "Python", icon: Code2, category: "Languages" },
-  { name: "Java", icon: Code2, category: "Languages" },
-  { name: "C++", icon: Code2, category: "Languages" },
-  { name: "JavaScript", icon: Braces, category: "Languages" },
-  { name: "TypeScript", icon: Braces, category: "Languages" },
-  { name: "Go", icon: Code2, category: "Languages" },
-  { name: "PostgreSQL", icon: Database, category: "Databases" },
-  { name: "MongoDB", icon: Database, category: "Databases" },
-  { name: "Redis", icon: Database, category: "Databases" },
-  { name: "AWS", icon: Cloud, category: "Cloud" },
-  { name: "GCP", icon: Cloud, category: "Cloud" },
-  { name: "Docker", icon: Server, category: "DevOps" },
-  { name: "Kubernetes", icon: Server, category: "DevOps" },
-  { name: "Kafka", icon: Cpu, category: "Data" },
-  { name: "Spark", icon: Cpu, category: "Data" },
-  { name: "Airflow", icon: Cpu, category: "Data" },
+const capabilities = [
+  { icon: Braces, title: "Backend & systems", text: "Python · Java · Go · C++ · REST APIs" },
+  { icon: Database, title: "Data & intelligence", text: "PostgreSQL · MongoDB · Redis · Kafka · Spark · Airflow" },
+  { icon: Cloud, title: "Cloud & infrastructure", text: "AWS · Google Cloud · Docker · Kubernetes" },
+  { icon: Workflow, title: "End-to-end thinking", text: "React · Angular · JavaScript · TypeScript" },
 ];
 
-const About = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
-
+export default function About() {
   return (
-    <section id="about" className="py-24 md:py-32">
+    <section id="about" className="about-section section-space" aria-labelledby="about-title">
       <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              About <span className="text-gradient">Me</span>
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              A passionate engineer focused on building robust and scalable systems
-            </p>
-          </div>
-
-          {/* About Content */}
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            {/* Bio */}
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <p className="text-muted-foreground leading-relaxed">
-                I'm a Software Engineer with over 3 years of experience specializing in
-                backend development and data engineering. Currently based in Dublin, Ireland.
-                I work on building high-performance distributed systems that process
-                millions of events daily.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                My journey in tech started with a curiosity about how large-scale systems
-                work. That curiosity led me to work on exciting projects ranging from
-                real-time data pipelines to machine learning infrastructure.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                When I'm not coding, you'll find me exploring new technologies,
-                contributing to open-source projects, or sharing knowledge through
-                technical blog posts and mentoring.
-              </p>
-
-              {/* Quick Stats */}
-              <div className="grid grid-cols-3 gap-4 pt-6">
-                <div className="text-center p-4 rounded-lg bg-secondary/50">
-                  <div className="text-2xl font-bold text-primary">3+</div>
-                  <div className="text-sm text-muted-foreground">Years Exp.</div>
-                </div>
-                <div className="text-center p-4 rounded-lg bg-secondary/50">
-                  <div className="text-2xl font-bold text-primary">20+</div>
-                  <div className="text-sm text-muted-foreground">Projects</div>
-                </div>
-                <div className="text-center p-4 rounded-lg bg-secondary/50">
-                  <div className="text-2xl font-bold text-primary">10+</div>
-                  <div className="text-sm text-muted-foreground">Technologies</div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Skills Grid */}
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid grid-cols-2 sm:grid-cols-3 gap-3"
-            >
-              {skills.map((skill) => {
-                const Icon = skill.icon;
-                return (
-                  <motion.div
-                    key={skill.name}
-                    variants={itemVariants}
-                    className="group relative p-4 rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-300 cursor-default"
-                    whileHover={{ scale: 1.02, y: -2 }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-md bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                        <Icon className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-sm">{skill.name}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {skill.category}
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </div>
-        </motion.div>
+        <Reveal><p className="eyebrow"><span className="section-number">02 /</span> THE PERSON BEHIND THE CODE</p></Reveal>
+        <div className="about-layout">
+          <Reveal className="about-copy"><h2 id="about-title">Curiosity is<br />my <span className="serif-accent">constant.</span></h2><p className="about-lead">I care about what happens<br />beneath the surface.</p><p>I’m a software engineer based in Dublin, with 3+ years of experience building backend services, data pipelines, and distributed systems. I like making complicated things work simply—and reliably.</p><p>From enterprise finance at Bank of America to machine learning infrastructure, my work lives at the intersection of thoughtful architecture and practical impact.</p><a className="text-link" href="/Aditya_Suryawanshi_CV.pdf" download>A little more about me <ArrowUpRight size={17} /></a></Reveal>
+          <Reveal delay={0.1} className="about-right"><TiltCard className="principle-card"><span className="mono">MY APPROACH / 001</span><div className="isometric-stack" aria-hidden="true"><i /><i /><i /><span>✳</span></div><h3>Think deeply.<br />Build deliberately.</h3><p>Good systems start with good questions.</p><span className="principle-corner">↗</span></TiltCard></Reveal>
+        </div>
+        <Reveal className="impact-strip"><div><strong>3<span>+</span></strong><p>Years in engineering</p></div><div><strong>2M</strong><p>Records reconciled daily</p></div><div><strong>65<span>%</span></strong><p>Faster report generation</p></div><div><strong>50<span>+</span></strong><p>Analysts supported</p></div></Reveal>
+        <div className="capability-grid">{capabilities.map(({ icon: Icon, title, text }, index) => <Reveal delay={index * 0.04} key={title}><div className="capability"><Icon size={22} strokeWidth={1.5} /><h3>{title}</h3><p>{text}</p></div></Reveal>)}</div>
       </div>
     </section>
   );
-};
-
-export default About;
+}

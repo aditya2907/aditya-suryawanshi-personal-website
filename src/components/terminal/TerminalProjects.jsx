@@ -1,0 +1,28 @@
+import { useEffect, useRef, useState } from "react";
+import { Activity, ArrowUpRight, Check, ChevronDown, Code2, Github, Link2, Network, ShieldCheck, X } from "lucide-react";
+import { portfolioProjects } from "@/lib/portfolio-data";
+
+const categories = ["Systems", "AI & data", "Web3"];
+const icons = { fleet: Network, fraud: ShieldCheck, lending: Link2, bearing: Activity };
+function ProjectArtwork({ project }) {
+  const Icon = icons[project.visual];
+  return <div className={`terminal-project-art art-${project.visual}`} aria-hidden="true"><span className="art-grid" /><div className="art-topline"><span>{project.visual === "fleet" ? "DISTRIBUTED COMPUTE" : project.visual === "fraud" ? "EXPLAINABLE AI" : project.visual === "lending" ? "DECENTRALIZED FINANCE" : "PREDICTIVE INTELLIGENCE"}</span><Code2 size={17} /></div><div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" /><div className="art-central"><Icon size={47} strokeWidth={1.25} /></div><span className="art-chip chip-one">{project.stack[0]}</span><span className="art-chip chip-two">{project.stack[1]}</span><span className="art-label">{project.name}<span> / 0{Number(project.number)}</span></span></div>;
+}
+function ProjectDetail({ project, onClose }) {
+  const dialog = useRef(null);
+  useEffect(() => {
+    const element = dialog.current;
+    const before = document.activeElement;
+    const overflow = document.body.style.overflow;
+    element.showModal(); document.body.style.overflow = "hidden";
+    return () => { element.close(); document.body.style.overflow = overflow; before?.focus(); };
+  }, []);
+  return <dialog ref={dialog} className="terminal-project-dialog" aria-labelledby="project-title" onCancel={(event) => { event.preventDefault(); onClose(); }} onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}><div className="project-dialog-tab"><span><Code2 size={15} /> {project.name.toLowerCase().replaceAll(" ", "-")}.md</span><button className="plain-icon" onClick={onClose} aria-label="Close project details"><X size={20} /></button></div><div className="project-dialog-body"><p className="comment-label">// project_{project.number} · {project.category}</p><h2 id="project-title">{project.name}</h2><p>{project.title}</p><div className="terminal-tags">{project.stack.map((technology) => <span key={technology}>{technology}</span>)}</div><h3>/* behind the build */</h3><ul>{project.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>{project.github ? <a className="terminal-button peach" href={project.github} target="_blank" rel="noreferrer"><Github size={17} /> view-source <ArrowUpRight size={16} /></a> : <p className="comment-label">// research project · repository not published</p>}</div></dialog>;
+}
+export default function TerminalProjects() {
+  const [selected, setSelected] = useState([]);
+  const [project, setProject] = useState(null);
+  const filtered = portfolioProjects.filter((item) => !selected.length || selected.includes(item.category));
+  function toggle(category) { setSelected((current) => current.includes(category) ? current.filter((item) => item !== category) : [...current, category]); }
+  return <div className="editor-layout projects-layout"><aside className="editor-sidebar"><div className="sidebar-heading"><ChevronDown size={15} />projects</div><div className="project-filters"><p>// filter by focus</p>{categories.map((category) => <label key={category}><input type="checkbox" checked={selected.includes(category)} onChange={() => toggle(category)} /><span className="checkbox-art"><Check size={12} /></span>{category}<span className="filter-count">{portfolioProjects.filter((item) => item.category === category).length}</span></label>)}<button className="clear-filters" disabled={!selected.length} onClick={() => setSelected([])}>show-all <X size={12} /></button></div><div className="sidebar-note"><span>// from idea to implementation</span><p>Distributed systems, intelligent applications, and the engineering in between.</p><a href="https://github.com/aditya2907" target="_blank" rel="noreferrer"><Github size={15} /> more-on-github <ArrowUpRight size={13} /></a></div></aside><section className="editor-workspace"><div className="project-list-tab"><span>{selected.length ? selected.join("; ") : "all-projects"}</span><span role="status">{filtered.length} projects</span></div><div className="terminal-project-list"><div className="projects-page-heading"><p className="comment-label">// selected work</p><h1>Things I’ve built<span className="syntax-variable">.</span></h1><p>A few experiments. A few systems. A lot of problem-solving.</p></div><div className="terminal-project-grid">{filtered.map((item) => <article key={item.name} className="terminal-project-item"><h2><span>Project {item.number}</span><span>// {item.name.toLowerCase().replaceAll(" ", "-")}</span></h2><div className="terminal-project-card"><button className="project-art-button" onClick={() => setProject(item)} aria-label={`Explore ${item.name}`}><ProjectArtwork project={item} /><span className="project-art-arrow"><ArrowUpRight size={21} /></span></button><div className="terminal-project-info"><p>{item.description}</p><div className="terminal-tags">{item.stack.slice(0, 4).map((technology) => <span key={technology}>{technology}</span>)}</div><div className="project-card-actions"><button className="terminal-button" onClick={() => setProject(item)}>view-project</button>{item.github && <a href={item.github} target="_blank" rel="noreferrer" aria-label={`${item.name} source code`}><Github size={19} /></a>}</div></div></div></article>)}</div></div></section>{project && <ProjectDetail project={project} onClose={() => setProject(null)} />}</div>;
+}

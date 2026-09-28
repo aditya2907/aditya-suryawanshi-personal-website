@@ -1,70 +1,24 @@
-import { motion } from "framer-motion";
-import { Mail, Linkedin, Github, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import { toast } from "sonner";
+import { ArrowUpRight, ArrowUp, Copy, Check } from "lucide-react";
+import Reveal from "./Reveal";
 
-const Contact = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
-    const subject = encodeURIComponent(`Website message from ${formData.get("name")}`);
-    const body = encodeURIComponent(`${formData.get("message")}\n\nReply to: ${formData.get("email")}`);
-    window.location.href = `mailto:aditya.suryawanshi@ucdconnect.ie?subject=${subject}&body=${body}`;
-    toast.success("Opening your email app to send the message.");
-    setIsSubmitting(false);
-  };
+const email = "adityams.dev@gmail.com";
+export default function Contact() {
+  const [copyStatus, setCopyStatus] = useState("");
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopyStatus("Email copied to clipboard.");
+    } catch { setCopyStatus("Select the email address above to copy it, or open it to email me."); }
+  }
   return (
-    <section id="contact" className="py-24 md:py-32 bg-secondary/30">
+    <section id="contact" className="contact-section" aria-labelledby="contact-title">
       <div className="section-container">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <div className="text-center mb-16">
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              Get in <span className="text-gradient">Touch</span>
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Have a project in mind? Let's talk!</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-            <div className="space-y-6">
-              <h3 className="font-display text-xl font-semibold">Let's Connect</h3>
-              <p className="text-muted-foreground">Let's build something meaningful together! Feel free to reach out for collaborations, opportunities, or just to say hi.</p>
-              <div className="space-y-4">
-                <a href="mailto:aditya.suryawanshi@ucdconnect.ie" className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/50 transition-colors">
-                  <Mail className="h-5 w-5 text-primary" />
-                  <span>aditya.suryawanshi@ucdconnect.ie</span>
-                </a>
-                <a href="https://linkedin.com/in/suryawanshiaditya" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/50 transition-colors">
-                  <Linkedin className="h-5 w-5 text-primary" />
-                  <span>LinkedIn Profile</span>
-                </a>
-                <a href="https://github.com/aditya2907" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border hover:border-primary/50 transition-colors">
-                  <Github className="h-5 w-5 text-primary" />
-                  <span>GitHub Profile</span>
-                </a>
-              </div>
-            </div>
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <Input name="name" autoComplete="name" placeholder="Your Name" aria-label="Your name" className="bg-card" required />
-              <Input name="email" type="email" autoComplete="email" placeholder="Your Email" aria-label="Your email" className="bg-card" required />
-              <Textarea name="message" placeholder="Your Message" aria-label="Your message" rows={5} className="bg-card resize-none" required />
-              <Button type="submit" disabled={isSubmitting} className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90 glow">
-                <Send className="h-4 w-4 mr-2" />{isSubmitting ? "Sending…" : "Send Message"}
-              </Button>
-            </form>
-          </div>
-        </motion.div>
+        <Reveal className="contact-topline"><p className="eyebrow"><span className="section-number">04 /</span> GOOD THINGS START WITH A CONVERSATION</p><span className="contact-star" aria-hidden="true">✳</span></Reveal>
+        <Reveal><h2 id="contact-title">Have something<br />in <span className="serif-accent">mind?</span><a href={`mailto:${email}`} className="contact-arrow" aria-label="Start a conversation by email"><ArrowUpRight strokeWidth={1} /></a></h2></Reveal>
+        <Reveal className="contact-bottom"><div><p>Interesting ideas. Challenging problems. New possibilities.<br />I’d love to hear what you’re thinking.</p><div className="email-row"><a href={`mailto:${email}`}>{email}</a><button className="icon-button" onClick={copyEmail} aria-label="Copy email address">{copyStatus.startsWith("Email copied") ? <Check size={18} /> : <Copy size={18} />}</button></div><p className="copy-status" role="status">{copyStatus}</p></div><div className="contact-socials"><a href="https://github.com/aditya2907" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={17} /></a><a href="https://linkedin.com/in/suryawanshiaditya" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={17} /></a><a href="/Aditya_Suryawanshi_CV.pdf" download>Résumé <ArrowUpRight size={17} /></a></div></Reveal>
+        <footer className="site-footer"><a className="footer-brand" href="#home">aditya<span aria-hidden="true">↗</span></a><p className="mono">© {new Date().getFullYear()} ADITYA SURYAWANSHI</p><a className="back-top mono" href="#home">BACK TO TOP <ArrowUp size={15} /></a></footer>
       </div>
-      <footer className="mt-24 text-center text-muted-foreground text-sm">
-        <p>© {new Date().getFullYear()} Aditya Suryawanshi. All rights reserved.</p>
-      </footer>
     </section>
   );
-};
-
-export default Contact;
+}

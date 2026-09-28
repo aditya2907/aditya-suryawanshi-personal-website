@@ -1,111 +1,51 @@
-import { motion } from "framer-motion";
-import { ExternalLink, Github, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, ArrowRight, Github, X } from "lucide-react";
+import { portfolioProjects } from "@/lib/portfolio-data";
+import Reveal from "./Reveal";
+import TiltCard from "./TiltCard";
+import ProjectVisual from "./ProjectVisual";
 
-const projects = [
-  {
-    title: "Distributed ML Training Platform",
-    github: "https://github.com/aditya2907/TensorFleet",
-    stack: ["Python", "Go", "FastAPI", "TensorFlow", "Docker", "Kubernetes"],
-    details: [
-      "Co-architected and implemented a cloud-native distributed machine learning training platform using microservices, enabling scalable orchestration of ML workloads across multiple compute nodes.",
-      "Led backend infrastructure development for API Gateway, orchestrator, and worker nodes using Go and gRPC to support horizontal scalability and fault tolerance.",
-      "Designed and integrated ML worker services using Python and TensorFlow for coordinated model training, storage management with MinIO, and caching via Redis.",
-      "Built a React dashboard for real-time system observability, including monitoring metrics (Prometheus) and visualizations (Grafana), improving operational insight and debugging efficiency.",
-      "Containerized services with Docker and orchestrated deployments using Kubernetes, ensuring reproducible environments and automated scaling on Linux infrastructure."
-    ],
-    featured: true,
-  },
-  {
-    title: "Fraud Detection System with Explainable AI",
-    github: "https://github.com/aditya2907/Financial-Fraud-Detection-using-Explainable-AI",
-    stack: ["Python", "XGBoost", "LightGBM", "CatBoost", "SHAP", "LIME", "Streamlit", "Docker"],
-    details: [
-      "Developed a comprehensive fraud detection system that integrates stacked ensemble models (XGBoost, LightGBM, CatBoost) with explainable-AI techniques (SHAP, LIME) to enhance prediction transparency and stakeholder trust.",
-      "Engineered backend data processing pipelines and model training scripts using Python, Pandas, and Scikit-learn to achieve real-time transaction scoring with high accuracy and operational performance.",
-      "Built an interactive Streamlit dashboard enabling risk managers and compliance officers to explore fraud metrics, real-time alerts, and model interpretability visualizations for actionable insights.",
-      "Configured explainability components (global and local feature importance, permutation plots) to provide audit-ready explanations, aligning with regulatory compliance and reducing false positives.",
-      "Packaged the system with Docker and designed end-to-end workflows for deployment, enabling scalable usage in financial environments handling thousands of transactions per second."
-    ],
-    featured: true,
-  },
-  {
-    title: "P2P Lending Platform",
-    github: "https://github.com/aditya2907/P2P-Lending-System",
-    stack: ["Python", "Solidity", "SQL", "React", "Linux"],
-    details: [
-      "Architected and implemented a full-stack peer-to-peer lending platform enabling lenders to fund borrower loan requests and borrowers to request and manage loan repayments.",
-      "Developed backend REST APIs in Python to handle core workflows including user registration, loan origination, balance tracking, repayment scheduling, and transaction settlements.",
-      "Designed and deployed Solidity smart contracts to enforce lending terms, escrow collateral, and automate interest distribution, ensuring tamper-resistant financial operations.",
-      "Integrated React frontend with backend APIs and on-chain contract interactions to provide real-time user experiences for both lender and borrower dashboards.",
-      "Implemented robust data persistence and querying in SQL to track loan history, portfolio performance, and user activity with secure authentication and role-based access control.",
-      "Applied structured logging, error handling, and validation checks to improve observability, operational stability, and debugging across services and smart contract events."
-    ],
-  },
-  {
-    title: "Prediction of Remaining Useful Life of Rolling Ball Bearings",
-    github: "",
-    stack: ["Python", "Scikit-learn"],
-    details: [
-      "Implemented machine learning models including Extreme Learning Machine (ELM) and neural networks to predict remaining useful life (RUL) of bearings, improving maintenance scheduling.",
-      "Applied feature preprocessing and Relative RMS (RRMS) segmentation to identify operation stages, enhancing prediction signal clarity and model performance.",
-      "Achieved improved short-term predictive accuracy and reduced training time through algorithm tuning and validation on limited data."
-    ],
-  }
-];
+function ProjectDialog({ project, onClose }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const dialog = ref.current;
+    dialog.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; dialog.close(); };
+  }, []);
+  return <dialog ref={ref} className="project-dialog" aria-labelledby="project-dialog-title" onClose={onClose} onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+    <div className="dialog-content">
+      <button className="dialog-close icon-button" aria-label="Close project details" onClick={onClose}><X size={22} /></button>
+      <p className="eyebrow">PROJECT {project.number} / {project.discipline}</p>
+      <h2 id="project-dialog-title">{project.name}</h2>
+      <p className="dialog-subtitle">{project.title}</p>
+      <div className="tech-tags">{project.stack.map((tech) => <span key={tech}>{tech}</span>)}</div>
+      <h3>Behind the build</h3>
+      <ul>{project.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
+      {project.github && <a className="button button-primary" href={project.github} target="_blank" rel="noreferrer"><Github size={17} /> Explore the repository <ArrowUpRight size={16} /></a>}
+    </div>
+  </dialog>;
+}
 
-const Projects = () => {
+export default function Projects() {
+  const [filter, setFilter] = useState("All work");
+  const [selected, setSelected] = useState(null);
+  const filtered = portfolioProjects.filter((project) => filter === "All work" || project.category === filter);
   return (
-    <section id="projects" className="py-24 md:py-32">
-      <div className="section-container">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <div className="text-center mb-16">
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              Featured <span className="text-gradient">Projects</span>
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Some of my recent work and side projects</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                className="group p-6 rounded-xl bg-card border border-border hover:border-primary/50 transition-all card-shadow"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -4 }}
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-display font-semibold text-xl">{project.title}</h3>
-                  {project.featured && <Star className="h-5 w-5 text-primary fill-primary" />}
-                </div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.stack.map((tech) => (
-                    <span key={tech} className="px-2.5 py-1 text-xs rounded-full bg-secondary text-secondary-foreground">{tech}</span>
-                  ))}
-                </div>
-                <ul className="list-disc pl-5 space-y-2 text-muted-foreground text-sm mb-4">
-                  {project.details.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-                <div className="flex gap-3">
-                  {project.github && (
-                    <Button variant="ghost" size="sm" asChild>
-                      <a href={project.github} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4 mr-2" />Code
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+    <section id="projects" className="work-section section-container section-space" aria-labelledby="work-title">
+      <Reveal className="section-heading"><div><p className="eyebrow"><span className="section-number">01 /</span> SELECTED WORK</p><h2 id="work-title">Ideas made <span className="serif-accent">real.</span></h2></div><p>A few things I’ve built.<br />Each one, a different kind of challenge.</p></Reveal>
+      <div className="work-toolbar"><div className="work-filters" role="group" aria-label="Filter projects">{["All work", "Systems", "AI & data", "Web3"].map((category) => <button key={category} aria-pressed={filter === category} onClick={() => setFilter(category)}>{category}{category === "All work" && <span>04</span>}</button>)}</div><span className="mono work-count" role="status">{String(filtered.length).padStart(2, "0")} PROJECTS</span></div>
+      <div className="projects-grid">
+        {filtered.map((project) => <Reveal key={project.name}>
+          <article className={`project-card accent-${project.accent}`}>
+            <TiltCard><button className="project-preview-button" onClick={() => setSelected(project)} aria-label={`Explore ${project.name}`}><ProjectVisual type={project.visual} /><span className="preview-open"><ArrowUpRight size={23} /></span></button></TiltCard>
+            <div className="project-info"><p className="eyebrow">{project.discipline}<span>{project.number}</span></p><div className="project-title-row"><h3><button onClick={() => setSelected(project)}>{project.name}</button></h3><button className="icon-button project-details-button" onClick={() => setSelected(project)} aria-label={`View ${project.name} details`}><ArrowUpRight size={23} /></button></div><p className="project-description">{project.description}</p><div className="tech-tags">{project.stack.slice(0, 4).map((tech) => <span key={tech}>{tech}</span>)}</div></div>
+          </article>
+        </Reveal>)}
       </div>
+      <Reveal className="work-end"><span className="mono">ALWAYS BUILDING. ALWAYS LEARNING.</span><a className="text-link" href="https://github.com/aditya2907" target="_blank" rel="noreferrer">More on GitHub <ArrowRight size={17} /></a></Reveal>
+      {selected && <ProjectDialog project={selected} onClose={() => setSelected(null)} />}
     </section>
   );
-};
-
-export default Projects;
+}

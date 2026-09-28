@@ -1,131 +1,35 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
+import CommandPalette from "./CommandPalette";
 
-const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
-];
-
-const Navigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
-
+const links = [{ label: "Work", id: "projects" }, { label: "About", id: "about" }, { label: "Experience", id: "experience" }];
+export default function Navigation() {
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
+  const menuButton = useRef(null);
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-
-      // Update active section based on scroll position
-      const sections = navLinks.map((link) => link.href.slice(1));
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
+    }, { rootMargin: "-15% 0px -60% 0px" });
+    document.querySelectorAll("main > section[id]").forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
-
-  const scrollToSection = (href) => {
-    const id = href.slice(1);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setIsMobileMenuOpen(false);
-  };
-
+  useEffect(() => {
+    if (!open) return;
+    const close = (event) => { if (event.key === "Escape") { setOpen(false); menuButton.current?.focus(); } };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [open]);
   return (
-    <>
-      <motion.nav
-        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${
-          isScrolled ? "glass card-shadow" : ""
-        } rounded-full px-2 py-2`}
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <button
-              key={link.name}
-              onClick={() => scrollToSection(link.href)}
-              className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-full ${
-                activeSection === link.href.slice(1)
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {activeSection === link.href.slice(1) && (
-                <motion.div
-                  layoutId="activeSection"
-                  className="absolute inset-0 bg-primary/10 rounded-full"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-              <span className="relative z-10">{link.name}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Mobile Menu Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? (
-            <X className="h-5 w-5" />
-          ) : (
-            <Menu className="h-5 w-5" />
-          )}
-        </Button>
-      </motion.nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className="fixed inset-0 z-40 glass md:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div className="flex flex-col items-center justify-center h-full gap-8">
-              {navLinks.map((link, index) => (
-                <motion.button
-                  key={link.name}
-                  onClick={() => scrollToSection(link.href)}
-                  className={`text-2xl font-display font-medium ${
-                    activeSection === link.href.slice(1)
-                      ? "text-primary"
-                      : "text-foreground"
-                  }`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {link.name}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <header className="site-header">
+      <div className="nav-shell">
+        <a className="brand" href="#home" aria-label="Aditya Suryawanshi home" onClick={() => setOpen(false)}><span className="brand-mark">a<span>↗</span></span><span className="brand-name">ADITYA<br />SURYAWANSHI<span className="brand-dot">.</span></span></a>
+        <nav className="desktop-nav" aria-label="Main navigation">{links.map(({ label, id }, i) => <a key={id} href={`#${id}`} className={active === id ? "active" : ""} aria-current={active === id ? "location" : undefined}><span className="nav-index">0{i + 1}</span>{label}</a>)}</nav>
+        <CommandPalette />
+        <a className="nav-contact" href="#contact">Let’s talk <ArrowUpRight size={16} /></a>
+        <button ref={menuButton} className="mobile-menu-button" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? "Close navigation" : "Open navigation"} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
+      </div>
+      {open && <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation">{[...links, { label: "Contact", id: "contact" }].map(({ id, label }, i) => <a href={`#${id}`} key={id} onClick={() => setOpen(false)}><span className="mono">0{i + 1}</span>{label}<ArrowUpRight size={20} /></a>)}</nav>}
+    </header>
   );
-};
-
-export default Navigation;
+}
