@@ -4,6 +4,7 @@ import { Command } from "cmdk";
 import { Search, ArrowUpRight, X } from "lucide-react";
 
 const commands = [
+  { label: "_blog", description: "Notes and articles", path: "/blog", keywords: ["writing", "posts"] },
   { label: "_hello", description: "Home & Snake game", path: "/", keywords: ["game", "snake", "home"] },
   { label: "_about-me", description: "The person behind the code", path: "/about-me", keywords: ["bio", "skills"] },
   { label: "_experience", description: "Work & education", path: "/experience", keywords: ["career", "university", "Bank of America"] },

@@ -9,7 +9,7 @@ const destinations = [
   { label: "Experience & education", keywords: ["career", "university", "Bank of America"], href: "#experience", Icon: BriefcaseBusiness, hint: "04" },
   { label: "Start a conversation", keywords: ["contact", "email"], href: "#contact", Icon: Mail, hint: "05" },
   { label: "Download résumé", keywords: ["CV", "resume"], href: "/Aditya_Suryawanshi_CV.pdf", Icon: FileDown, download: true, hint: "PDF" },
-  { label: "Open GitHub", keywords: ["code", "repositories"], href: "https://github.com/aditya2907", Icon: Github, external: true, hint: "↗" },
+  { label: "Open GitHub", keywords: ["code", "repositories"], href: "https://github.com/adi-swe", Icon: Github, external: true, hint: "↗" },
 ];
 
 export default function CommandPalette() {

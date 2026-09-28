@@ -1,7 +1,7 @@
 const projects = [
   {
     title: "Distributed ML Training Platform",
-    github: "https://github.com/aditya2907/TensorFleet",
+    github: "https://github.com/adi-swe/TensorFleet",
     stack: ["Python", "Go", "FastAPI", "TensorFlow", "Docker", "Kubernetes"],
     details: [
       "Co-architected and implemented a cloud-native distributed machine learning training platform using microservices, enabling scalable orchestration of ML workloads across multiple compute nodes.",
@@ -14,7 +14,7 @@ const projects = [
   },
   {
     title: "Fraud Detection System with Explainable AI",
-    github: "https://github.com/aditya2907/Financial-Fraud-Detection-using-Explainable-AI",
+    github: "https://github.com/adi-swe/Financial-Fraud-Detection-using-Explainable-AI",
     stack: ["Python", "XGBoost", "LightGBM", "CatBoost", "SHAP", "LIME", "Streamlit", "Docker"],
     details: [
       "Developed a comprehensive fraud detection system that integrates stacked ensemble models (XGBoost, LightGBM, CatBoost) with explainable-AI techniques (SHAP, LIME) to enhance prediction transparency and stakeholder trust.",
@@ -27,7 +27,7 @@ const projects = [
   },
   {
     title: "P2P Lending Platform",
-    github: "https://github.com/aditya2907/P2P-Lending-System",
+    github: "https://github.com/adi-swe/P2P-Lending-System",
     stack: ["Python", "Solidity", "SQL", "React", "Linux"],
     details: [
       "Architected and implemented a full-stack peer-to-peer lending platform enabling lenders to fund borrower loan requests and borrowers to request and manage loan repayments.",

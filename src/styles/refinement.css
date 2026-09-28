@@ -1,0 +1,129 @@
+/* Airy terminal composition, with original portfolio content and artwork. */
+.portfolio-pointer { position: fixed; top: 0; left: 0; z-index: 10000; pointer-events: none; opacity: 0; }
+.portfolio-pointer i { display: block; width: 6px; height: 6px; margin: -3px; border-radius: 50%; background: #43d9ad; transition: width .15s, height .15s, margin .15s, background .15s, box-shadow .15s; }
+.portfolio-pointer[data-interactive="true"] i { width: 18px; height: 18px; margin: -9px; background: #43d9ad45; box-shadow: inset 0 0 0 1px #43d9ad; }
+.custom-pointer, .custom-pointer * { cursor: none !important; }
+.profile-layout { display: grid; grid-template-columns: 208px minmax(0, 1fr) minmax(0, 1fr); width: 100%; min-height: 100%; }
+.profile-folder { display: flex; align-items: center; gap: 8px; width: 100%; padding: 15px 28px; color: var(--muted); font-size: 13px; text-align: left; }
+.folder-education svg:nth-child(2) { color: #e9a898; }
+.folder-work svg:nth-child(2) { color: #79ceb8; }
+.profile-layout .sidebar-heading { width: 100%; font-weight: 600; color: #e5edf3; }
+.profile-layout .file-link, .config-layout .file-link { padding: 13px 18px 13px 47px; font-size: 12px; }
+.profile-document { padding-top: 42px; min-width: 0; border-right: 1px solid var(--border); }
+.profile-document .editor-code { color: var(--muted); font-size: 13px; line-height: 1.65; padding-inline: 18px; }
+.profile-document .code-line > span:last-child { white-space: pre-wrap; overflow-wrap: anywhere; }
+.profile-console { background: #010704; min-width: 0; color: #89dfb6; font-size: 14px; }
+.profile-console h2 { display: flex; gap: 8px; align-items: center; background: #081607; border-bottom: 1px solid #1c3923; font-size: 13px; padding: 12px; }
+.console-content { padding: 17px; line-height: 1.7; }
+.console-content form { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.console-content input { background: transparent; border: 0; outline: none; color: #a9f2cd; min-width: 80px; width: 100%; padding: 5px; }
+.console-content input:focus-visible { outline: 1px solid #457657; }
+.console-entry { margin-top: 18px; overflow-wrap: anywhere; }
+.config-layout { grid-template-columns: 208px minmax(0, 1fr); }
+.config-tab { display: flex; gap: 8px; align-items: center; width: fit-content; padding: 12px 18px; font-size: 13px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.config-layout .editor-code { padding-top: 18px; font-size: 14px; line-height: 1.85; }
+.blog-page { width: 100%; min-height: 100%; background: radial-gradient(ellipse at 70% 25%, #12364744, transparent 65%), #06131f; }
+.blog-banner { height: 260px; display: grid; place-items: center; position: relative; overflow: hidden; background: linear-gradient(135deg, #050e17, #071c28); }
+.blog-banner h1 { font: 600 36px/1.2 system-ui, sans-serif; position: relative; }
+.blog-orbit { position: absolute; width: 560px; height: 560px; border: 1px solid #43d9ad12; border-radius: 50%; box-shadow: 0 0 0 55px #43d9ad05, 0 0 0 110px #43d9ad03; transform: rotateX(65deg) rotateZ(-25deg); }
+.blog-empty { max-width: 580px; margin: 35px auto; padding: 35px; text-align: center; border: 1px solid var(--border); border-radius: 12px; background: #081927; }
+.blog-empty > svg { margin: 0 auto 22px; color: var(--mint); }
+.blog-empty h2 { margin: 20px 0 12px; font-size: 21px; }
+.blog-empty p { font-size: 12px; line-height: 1.9; color: var(--muted); }
+.blog-empty .terminal-button { margin-top: 25px; }
+.projects-layout { grid-template-columns: 208px minmax(0, 1fr); }
+.projects-layout .sidebar-note, .projects-page-heading, .project-filters > p, .filter-count { display: none; }
+.project-filters { padding: 10px 25px; }
+.project-filters label { padding: 8px 0; font-size: 12px; }
+.project-list-tab { border: 0; padding: 50px 40px 15px; }
+.terminal-project-list { padding: 0 40px 40px; }
+.terminal-project-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.terminal-project-item { position: relative; }
+.terminal-project-item > h2 { font: 600 17px/1.5 system-ui, sans-serif; margin: 0; padding: 15px 16px 0; background: #061522; border-inline: 1px solid var(--border); transform: translateY(140px); position: relative; z-index: 1; }
+.terminal-project-item > h2 span { color: var(--light); }
+.terminal-project-card { display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; }
+.terminal-project-art { height: 140px; }
+.terminal-project-art .art-central { top: 34px; width: 70px; height: 70px; }
+.terminal-project-art .art-chip, .terminal-project-art .art-label { display: none; }
+.terminal-project-info { padding: 16px; }
+.terminal-project-info h2 { font: 600 18px/1.5 system-ui, sans-serif; margin-bottom: 10px; }
+.terminal-project-info > p { font-size: 12px; line-height: 1.65; min-height: 0; }
+.terminal-project-info > .terminal-tags { display: none; }
+.project-card-actions { margin-top: 16px; }
+.project-card-actions .terminal-button { color: var(--mint); }
+@media (max-width: 1100px) { .terminal-project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .profile-layout { grid-template-columns: 190px minmax(0, 1fr); } .profile-console { grid-column: 2; min-height: 250px; } .profile-layout > .editor-sidebar { grid-row: span 2; } }
+@media (max-width: 760px) { .profile-layout, .config-layout, .projects-layout { grid-template-columns: 1fr; } .profile-layout > .editor-sidebar { grid-row: auto; } .profile-console { grid-column: 1; } .profile-document { padding-top: 20px; } .profile-folder { padding: 10px 20px; } .profile-layout .file-link, .config-layout .file-link { display: inline-flex; width: auto; padding: 10px 18px; } .terminal-project-list { padding: 0 22px 30px; } .project-list-tab { padding: 22px; } .blog-banner { height: 180px; } .blog-empty { margin: 24px; padding: 28px 20px; } .config-layout .editor-code { font-size: 11px; } }
+@media (max-width: 480px) { .terminal-project-grid { grid-template-columns: 1fr; } }
+:root { --navy: #071725; --deep: #061320; --panel: #0a1e2c; --border: #213340; --muted: #8b9dad; --purple: #8580f4; }
+.terminal-header { height: 49px; }
+.terminal-brand { min-width: 208px; font-size: 15px; padding-inline: 30px; }
+.terminal-desktop-nav a, .header-contact { font-size: 14px; padding-inline: 30px; }
+.terminal-search-trigger { padding: 5px 10px; margin-inline: 14px; }
+.terminal-footer { height: 56px; font-size: 14px; }
+.footer-find { padding-inline: 17px; }
+.footer-social { width: 54px; }
+.footer-branch { display: none; }
+.terminal-home { max-width: 1440px; min-height: 570px; height: 100%; padding: 65px 5% 40px 9.5%; gap: 55px; grid-template-columns: 1.05fr 1fr; }
+.terminal-intro { padding-block: 0; }
+.intro-greeting { font-size: clamp(20px, 2.2vw, 30px); margin-bottom: 12px; }
+.terminal-intro h1 { font-family: 'Fira Code', monospace; font-size: clamp(56px, 5.4vw, 80px); font-weight: 600; letter-spacing: -.065em; line-height: 1.08; }
+.terminal-intro h1 > span { font-size: .48em; letter-spacing: -.04em; margin-top: 10px; color: #b8cad7; }
+.hero-role { font-size: clamp(19px, 2.2vw, 28px); margin-top: 22px; font-weight: 500; }
+.role-text { animation: none; }
+.hero-role .terminal-caret { background: var(--purple); }
+.intro-code { margin-top: 42px; font-size: 13px; line-height: 1.8; }
+.github-code { font-size: 13px; white-space: normal; }
+.intro-actions { margin-top: 25px; }
+.intro-actions .terminal-button { background: transparent; border-color: #47606f; }
+.home-game { max-width: 510px; perspective: 1200px; }
+.game-eyebrow, .home-status { display: none; }
+.snake-machine { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); gap: 15px; padding: 20px; background: linear-gradient(135deg, #64c3a4eb, #327367dd 52%, #0b2534f5); box-shadow: inset 0 1px 2px #c4ffe944, 0 30px 90px #0003; transition: transform .5s ease, box-shadow .5s ease; }
+@media (hover: hover) { .snake-machine:hover { transform: rotateY(-3deg) rotateX(2deg); box-shadow: inset 0 1px 2px #c4ffe944, 12px 30px 80px #0005; } }
+.snake-board { aspect-ratio: 18/27; background: #061724; }
+.snake-grid { opacity: .3; }
+.snake-ready { background: linear-gradient(transparent, #07172522 55%, #071725aa); padding-bottom: 18px; }
+.game-watermark { display: none; }
+.snake-ready .terminal-button { background: #071725; color: #e5edf2; font-size: 12px; }
+.snake-controls { padding: 0; }
+.game-instructions { background: #092f3455; font-size: 11px; padding: 12px 10px; }
+.game-instructions p:first-child { display: none; }
+.game-instructions p:nth-child(2) { font-size: 10px; color: #e0f1ec; }
+.arrow-pad { margin-top: 12px; }
+.game-score { font-size: 11px; margin-top: 18px; }
+.food-progress { grid-template-columns: repeat(10, 1fr); width: 100%; gap: 4px; }
+.food-progress i { width: 7px; height: 7px; }
+.game-skip { padding: 8px 13px; font-size: 12px; }
+.home-glow { filter: blur(70px); width: 420px; height: 390px; opacity: .26; }
+.glow-mint { top: 0; right: 14%; background: #53ddb1; }
+.glow-blue { bottom: -5%; right: -2%; background: #5552d5; }
+.terminal-main > .editor-layout { animation: page-reveal .35s ease-out; }
+@keyframes page-reveal { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+@media (min-width: 1500px) { .terminal-home { padding-inline: 90px; gap: 95px; } }
+@media (max-width: 1100px) {
+  .terminal-desktop-nav a, .header-contact { padding-inline: 16px; font-size: 12px; }
+  .terminal-brand { min-width: 195px; padding-inline: 20px; }
+  .terminal-home { padding-inline: 6%; gap: 35px; }
+  .intro-code, .github-code { font-size: 11px; }
+  .snake-machine { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); padding: 18px; gap: 12px; }
+  .game-score { font-size: 9px; }
+  .food-progress { grid-template-columns: repeat(5, 1fr); width: fit-content; gap: 7px; }
+}
+@media (max-width: 760px) {
+  .terminal-header { height: 60px; }
+  .terminal-brand { min-width: 0; }
+  .terminal-home { height: auto; min-height: 0; padding: 52px 26px 45px; gap: 45px; }
+  .intro-greeting { font-size: 22px; }
+  .terminal-intro h1 { font-size: clamp(58px, 13vw, 80px); }
+  .hero-role { font-size: clamp(18px, 4.8vw, 25px); }
+  .intro-code { margin-top: 30px; font-size: 11px; }
+  .home-game { max-width: 490px; }
+  .snake-machine { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); padding: 21px; gap: 15px; }
+  .snake-board { aspect-ratio: 18/28; }
+  .home-glow { max-width: 85%; height: 300px; }
+  .glow-mint { top: 42%; right: 10%; }
+  .terminal-footer { height: 46px; font-size: 10px; }
+  .footer-social { width: 38px; }
+  .footer-find { padding-inline: 12px; }
+  .footer-handle { padding-inline: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .terminal-main > .editor-layout { animation: none; } .snake-machine:hover { transform: none; } }

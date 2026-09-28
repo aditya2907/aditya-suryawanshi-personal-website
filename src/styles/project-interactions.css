@@ -1,0 +1,34 @@
+.terminal-project-card { position: relative; isolation: isolate; background: #011221; border: 1px solid #1e2d3d80; border-radius: 12px; box-shadow: 0 10px 15px -3px #0003, 0 4px 6px -4px #0003; transition: border-color 300ms ease; }
+.terminal-project-card::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit; opacity: 0; background: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 20%), #43d9ad26, transparent 70%); transition: opacity 300ms ease; }
+.terminal-project-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; z-index: 3; pointer-events: none; background: linear-gradient(90deg, transparent, #ffffff1a, transparent); }
+.terminal-project-info { position: relative; z-index: 2; padding: 16px; }
+.terminal-project-info h2 { color: #e5e9f0; margin-bottom: 8px; font-size: 18px; line-height: 1.5; }
+.terminal-project-info > p { color: #829bb3; font-size: 14px; line-height: 1.5; margin-bottom: 16px; }
+.terminal-project-art { height: auto; aspect-ratio: 16 / 9; }
+.project-art-button { overflow: hidden; }
+.project-art-button::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, #01122199, transparent); opacity: 0; transition: opacity 300ms ease; pointer-events: none; }
+.project-art-arrow { display: none; }
+.project-art-button:hover .art-central { transform: perspective(300px) rotateX(15deg) rotateY(-18deg) rotateZ(-8deg); }
+.project-card-actions { justify-content: flex-start; gap: 12px; margin-top: 0; }
+.project-card-actions > a { margin-left: auto; padding: 2px; }
+.project-card-actions .terminal-button { white-space: nowrap; flex-shrink: 0; }
+.project-list-tab { padding-top: 76px; font-size: 14px; }
+@media (max-width: 760px) { .project-list-tab { padding-top: 22px; } }
+.project-card-actions .terminal-button { background: #1c2b3a; color: #43d9ad; border: 1px solid transparent; border-radius: 4px; font-size: 14px; padding: 8px 16px; min-height: 38px; gap: 6px; transition: background 150ms ease, border-color 300ms ease, transform 150ms ease; }
+.project-button-arrow { display: inline-block; transition: transform 180ms ease; }
+.terminal-project-card:focus-within { border-color: #43d9ad80; }
+.project-card-actions .terminal-button:focus-visible { outline: 2px solid #43d9ad; outline-offset: 4px; }
+.project-card-actions .terminal-button:active { transform: scale(.98); }
+.project-filters label { color: #829bb3; transition: color 150ms ease; }
+.project-filters label:has(input:checked) { color: #e5e9f0; }
+.project-filters input:focus-visible + .checkbox-art { outline: 2px solid #43d9ad; outline-offset: 3px; }
+@media (hover: hover) {
+  .terminal-project-card:hover { border-color: #43d9ad4d; transform: none; }
+  .terminal-project-card:hover::before, .terminal-project-card:hover .project-art-button::after { opacity: 1; }
+  .terminal-project-card:hover .project-card-actions .terminal-button { border-color: #43d9ad4d; }
+  .project-card-actions .terminal-button:hover { background: #263b50; transform: none; }
+  .project-card-actions .terminal-button:hover .project-button-arrow { transform: translateX(4px); }
+  .project-card-actions .terminal-button:active { transform: scale(.98); }
+  .project-filters label:hover { color: #e5e9f0; }
+}
+@media (prefers-reduced-motion: reduce) { .terminal-project-card, .terminal-project-card::before, .project-art-button::after, .project-card-actions .terminal-button, .project-button-arrow { transition: none; } }

@@ -44,7 +44,7 @@ export default function Projects() {
           </article>
         </Reveal>)}
       </div>
-      <Reveal className="work-end"><span className="mono">ALWAYS BUILDING. ALWAYS LEARNING.</span><a className="text-link" href="https://github.com/aditya2907" target="_blank" rel="noreferrer">More on GitHub <ArrowRight size={17} /></a></Reveal>
+      <Reveal className="work-end"><span className="mono">ALWAYS BUILDING. ALWAYS LEARNING.</span><a className="text-link" href="https://github.com/adi-swe" target="_blank" rel="noreferrer">More on GitHub <ArrowRight size={17} /></a></Reveal>
       {selected && <ProjectDialog project={selected} onClose={() => setSelected(null)} />}
     </section>
   );

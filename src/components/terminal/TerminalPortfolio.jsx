@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, Link, Outlet, useLocation } from "react-router-dom";
 import { Github, Linkedin, Menu, X, GitBranch, ArrowUpRight } from "lucide-react";
 import TerminalPalette from "./TerminalPalette";
+import PortfolioPointer from "./PortfolioPointer";
 
 const pages = [
-  { path: "/about-me", label: "_about-me" }, { path: "/experience", label: "_experience" },
+  { path: "/about-me", label: "_about-me" }, { path: "/blog", label: "_blog" },
   { path: "/projects", label: "_projects" }, { path: "/uses", label: "_uses" },
 ];
 export default function TerminalPortfolio() {
@@ -26,6 +27,7 @@ export default function TerminalPortfolio() {
     return () => window.removeEventListener("keydown", escape);
   }, [menu]);
   return <div className="terminal-shell">
+    <PortfolioPointer />
     <a className="terminal-skip" href="#portfolio-content">Skip to content</a>
     <header className="terminal-header">
       <NavLink className="terminal-brand" to="/" aria-label="Aditya home"><span>aditya<span className="brand-at">@dev</span>:~$</span><i aria-hidden="true" /></NavLink>
@@ -34,7 +36,7 @@ export default function TerminalPortfolio() {
     </header>
     {menu && <nav id="terminal-mobile-nav" className="terminal-mobile-nav" aria-label="Mobile navigation">{[{ path: "/", label: "_hello" }, ...pages, { path: "/contact-me", label: "_contact-me" }].map((page) => <NavLink key={page.path} to={page.path} end={page.path === "/"} onClick={() => setMenu(false)}>{page.label}<ArrowUpRight size={16} /></NavLink>)}</nav>}
     <main ref={main} id="portfolio-content" className="terminal-main" tabIndex={-1}><Outlet /></main>
-    <footer className="terminal-footer"><span className="footer-find">find me on:</span><a className="footer-social" href="https://linkedin.com/in/suryawanshiaditya" target="_blank" rel="noreferrer" aria-label="Aditya on LinkedIn"><Linkedin size={18} /></a><a className="footer-social" href="https://github.com/aditya2907" target="_blank" rel="noreferrer" aria-label="Aditya on GitHub"><Github size={19} /></a><span className="footer-branch"><GitBranch size={13} /> always-learning</span><a className="reference-credit" href="https://valentinacalabrese.com/" target="_blank" rel="noreferrer">design reference <ArrowUpRight size={12} /><span className="sr-only">: Valentina Calabrese</span></a><a className="footer-handle" href="https://github.com/aditya2907" target="_blank" rel="noreferrer">@aditya2907 <Github size={19} /></a></footer>
+    <footer className="terminal-footer"><span className="footer-find">find me on:</span><a className="footer-social" href="https://linkedin.com/in/suryawanshiaditya" target="_blank" rel="noreferrer" aria-label="Aditya on LinkedIn"><Linkedin size={18} /></a><a className="footer-social" href="https://github.com/adi-swe" target="_blank" rel="noreferrer" aria-label="Aditya on GitHub"><Github size={19} /></a><span className="footer-branch"><GitBranch size={13} /> always-learning</span><a className="reference-credit" href="https://valentinacalabrese.com/" target="_blank" rel="noreferrer">design reference <ArrowUpRight size={12} /><span className="sr-only">: Valentina Calabrese</span></a><a className="footer-handle" href="https://github.com/adi-swe" target="_blank" rel="noreferrer">@adi-swe <Github size={19} /></a></footer>
   </div>;
 }
 

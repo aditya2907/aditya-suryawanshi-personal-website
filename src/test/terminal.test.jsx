@@ -5,10 +5,11 @@ import TerminalPortfolio from "@/components/terminal/TerminalPortfolio";
 import TerminalHome from "@/components/terminal/TerminalHome";
 import TerminalProjects from "@/components/terminal/TerminalProjects";
 import TerminalContact from "@/components/terminal/TerminalContact";
-import { TerminalAbout, TerminalExperience, TerminalUses } from "@/components/terminal/EditorPages";
+import { TerminalExperience } from "@/components/terminal/EditorPages";
+import { ProfileAbout as TerminalAbout, ProfileUses as TerminalUses, ProfileBlog } from "@/components/terminal/ReferenceSections";
 
 function renderPortfolio(path = "/") {
-  return render(<MemoryRouter initialEntries={[path]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}><Routes><Route element={<TerminalPortfolio />}><Route path="/" element={<TerminalHome />} /><Route path="/about-me" element={<TerminalAbout />} /><Route path="/experience" element={<TerminalExperience />} /><Route path="/projects" element={<TerminalProjects />} /><Route path="/uses" element={<TerminalUses />} /><Route path="/contact-me" element={<TerminalContact />} /></Route></Routes></MemoryRouter>);
+  return render(<MemoryRouter initialEntries={[path]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}><Routes><Route element={<TerminalPortfolio />}><Route path="/" element={<TerminalHome />} /><Route path="/blog" element={<ProfileBlog />} /><Route path="/about-me" element={<TerminalAbout />} /><Route path="/experience" element={<TerminalExperience />} /><Route path="/projects" element={<TerminalProjects />} /><Route path="/uses" element={<TerminalUses />} /><Route path="/contact-me" element={<TerminalContact />} /></Route></Routes></MemoryRouter>);
 }
 
 beforeEach(() => {
@@ -25,7 +26,7 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 describe("Terminal portfolio interactions", () => {
   it("renders Aditya’s identity and starts, pauses, resumes, and releases the game", () => {
     renderPortfolio();
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("AdityaSuryawanshi");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Aditya");
     fireEvent.click(screen.getByRole("button", { name: "start-game" }));
     const board = screen.getByRole("group", { name: /Snake board/ });
     expect(board).toHaveFocus();
@@ -40,21 +41,24 @@ describe("Terminal portfolio interactions", () => {
     renderPortfolio();
     fireEvent.click(screen.getByRole("link", { name: /^skip/ }));
     expect(screen.getByLabelText("About Aditya")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "skills.json" }));
-    expect(screen.getByLabelText("Technical skills")).toHaveTextContent("PostgreSQL");
-    expect(screen.getByRole("tab", { name: "skills.json" })).toHaveAttribute("aria-selected", "true");
-    fireEvent.keyDown(screen.getByRole("tab", { name: "skills.json" }), { key: "ArrowRight" });
-    expect(screen.getByLabelText("Engineering approach")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "masters" }));
+    expect(screen.getByLabelText("About Aditya")).toHaveTextContent("University College Dublin");
+    const command = screen.getByLabelText("Terminal command");
+    fireEvent.change(command, { target: { value: "help" } });
+    fireEvent.submit(command.closest("form"));
+    expect(screen.getByRole("log")).toHaveTextContent("whoami");
+
   });
   it("filters projects, opens details, and restores all projects", () => {
     renderPortfolio("/projects");
     expect(screen.getAllByRole("button", { name: /^Explore / })).toHaveLength(4);
-    fireEvent.click(screen.getByRole("checkbox", { name: /AI & data/ }));
-    expect(screen.getAllByRole("button", { name: /^Explore / })).toHaveLength(2);
+    fireEvent.click(screen.getByRole("checkbox", { name: /Scikit-learn/ }));
+    expect(screen.getAllByRole("button", { name: /^Explore / })).toHaveLength(1);
     expect(screen.queryByRole("button", { name: "Explore TensorFleet" })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /show-all/ }));
     fireEvent.click(screen.getByRole("button", { name: "Explore Fraud Detective" }));
     const modal = screen.getByRole("dialog", { name: "Fraud Detective" });
-    expect(within(modal).getByRole("link", { name: /view-source/ })).toHaveAttribute("href", "https://github.com/aditya2907/Financial-Fraud-Detection-using-Explainable-AI");
+    expect(within(modal).getByRole("link", { name: /view-source/ })).toHaveAttribute("href", "https://github.com/adi-swe/Financial-Fraud-Detection-using-Explainable-AI");
     fireEvent.click(within(modal).getByRole("button", { name: "Close project details" }));
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: /show-all/ }));
@@ -67,7 +71,7 @@ describe("Terminal portfolio interactions", () => {
     fireEvent.change(input, { target: { value: "projects" } });
     await waitFor(() => expect(screen.getAllByRole("option")).toHaveLength(1));
     fireEvent.keyDown(input, { key: "Enter" });
-    await screen.findByRole("heading", { name: /Things I’ve built/ });
+    await screen.findByRole("button", { name: "Explore TensorFleet" });
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Open command palette" }));
     fireEvent.click(screen.getByRole("button", { name: "Close command palette" }));
@@ -79,7 +83,7 @@ describe("Terminal portfolio interactions", () => {
     const menu = screen.getByRole("navigation", { name: "Mobile navigation" });
     fireEvent.click(within(menu).getByRole("link", { name: "_uses" }));
     expect(screen.queryByRole("navigation", { name: "Mobile navigation" })).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /My engineering toolkit/ })).toBeInTheDocument();
+    expect(screen.getByLabelText("Engineering toolkit")).toHaveTextContent("Visual Studio Code");
   });
   it("preserves work and education details", () => {
     renderPortfolio("/experience");
