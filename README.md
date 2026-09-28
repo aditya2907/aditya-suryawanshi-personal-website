@@ -1,7 +1,6 @@
+# Aditya Suryawanshi — Personal Website
 
-# Aditya Suryawanshi – Personal Website
-
-Production domain: https://adityasuryawanshi.com
+Creative software engineering portfolio for [adityasuryawanshi.com](https://adityasuryawanshi.com), built with Next.js and Tailwind CSS.
 
 ## Local development
 
@@ -10,43 +9,19 @@ npm ci
 npm run dev
 ```
 
-Open `http://localhost:8080`. The current design is a terminal/editor-style
-portfolio with a keyboard-accessible Snake game, file tabs, filtered projects,
-and a searchable command palette (`Cmd/Ctrl+K`). Contact opens an email draft;
-it does not send or store messages on a server.
-
-
-## Checks and GitHub Actions
+## Production build
 
 ```bash
-npm run lint:portfolio
-npm test
 npm run build
 ```
 
-`.github/workflows/ci.yml` runs these checks with Node.js 22 on pushes,
-pull requests, and manual dispatch. Actions are pinned to immutable commit SHAs
-and use read-only repository permissions. No secrets or cloud credentials are
-needed. There is no automatic deployment step. The workflow only becomes active
-after it is committed and pushed to GitHub.
+The build exports a static site to `dist/`. Render deploys the `main` branch with `npm ci && npm run build` and publishes that directory.
 
-`lint:portfolio` checks the active portfolio and its tests. The original `lint`
-command still includes older, unused scaffold components; those were preserved.
+Blog content is optional. If `NOTION_TOKEN` and `NOTION_DATABASE_ID` are not configured, the portfolio builds with an empty blog instead of failing.
 
-Active UI: `src/components/terminal/` and `src/styles/terminal.css`.
-Portfolio content: `src/lib/portfolio-data.js`.
+## Deployment
 
-## Deploy to Google Cloud Run
+- Production: [adityasuryawanshi.com](https://adityasuryawanshi.com)
+- Render service: [aditya-suryawanshi.onrender.com](https://aditya-suryawanshi.onrender.com)
 
-The included multi-stage `Dockerfile` builds the Vite site and serves it with
-Nginx on Cloud Run.
-
-```bash
-gcloud run deploy aditya-portfolio \
-  --source . \
-  --project advance-airline-465318-q7 \
-  --region europe-west1 \
-  --allow-unauthenticated
-```
-
-Production domain: https://adityasuryawanshi.com
+GitHub Actions verifies the production build on pushes and pull requests.
