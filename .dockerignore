@@ -1,0 +1,9 @@
+.git
+.netlify
+node_modules
+dist
+*.log
+.env*
+*.pem
+*.key
+

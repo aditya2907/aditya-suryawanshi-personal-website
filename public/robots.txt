@@ -1,7 +1,16 @@
-# Allow all user agents.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
 User-agent: *
 Allow: /
 
-# User agent "Googlebot" should not crawl the `http://example.com/nogooglebot/` folder or any of its subdirectories.
-User-agent: Googlebot
-Disallow: /nogooglebot/
+Sitemap: https://adityasuryawanshi.com/sitemap.xml
